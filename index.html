@@ -237,8 +237,14 @@
 
     <!-- سكربت فحص الكود والاعلانات -->
     <script>
+        // رابط إعلانات Adsterra الخاص بك
+        const adsterraLink = "https://www.effectivegatecpm.com/xyutjq5i?key=942686a114ccb3e086661b52eb7a1224";
+
         // دوال الإعلان
         function simulateAd() {
+            // فتح رابط إعلان Adsterra في نافذة جديدة بمجرد الضغط
+            window.open(adsterraLink, '_blank');
+
             const modal = document.getElementById('ad-modal');
             const playingState = document.getElementById('ad-playing-state');
             const finishedState = document.getElementById('ad-finished-state');
@@ -298,13 +304,18 @@
             const errorElement = document.getElementById(inputId + '-error');
 
             if (userInput === correctCode) {
-                // الكود صحيح: إخفاء رسالة الخطأ، تفريغ الحقل، وفتح الرابط في صفحة جديدة
+                // الكود صحيح: إخفاء رسالة الخطأ وتلوين الحقل بالأخضر
                 errorElement.classList.add('hidden');
                 inputElement.classList.remove('border-red-500');
                 inputElement.classList.add('border-green-500');
                 
-                // فتح رابط التحميل
-                window.open(downloadLink, '_blank');
+                // فتح رابط إعلان Adsterra في نافذة جديدة لزيادة الأرباح
+                window.open(adsterraLink, '_blank');
+                
+                // توجيه الزائر في نفس الصفحة إلى رابط ميديافاير للتحميل (لتجنب حظر النوافذ)
+                setTimeout(() => {
+                    window.location.href = downloadLink;
+                }, 200);
             } else {
                 // الكود خاطئ: إظهار رسالة الخطأ وتلوين الحقل بالأحمر
                 errorElement.classList.remove('hidden');
@@ -315,4 +326,3 @@
     </script>
 </body>
 </html>
-
