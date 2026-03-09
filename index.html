@@ -150,7 +150,6 @@
                 <h3 class="text-xl font-bold mb-1 text-white">جي تي اي مغربية</h3>
                 <p class="text-sm text-gray-300 mb-4">أدخل كود التحميل السري الذي وضعته في الفيديو لفتح الرابط.</p>
                 
-                <!-- لاحظ أننا نمرر الكود ومعرف الحقل للدالة -->
                 <button onclick="simulateAd('RAMADHANV2', 'gta-code')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all flex justify-center items-center gap-2 mb-5 text-sm shadow-[0_4px_10px_rgba(37,99,235,0.3)] border border-blue-500/50">
                     <i class="fa-solid fa-play-circle text-lg"></i>
                     شاهد إعلان للحصول على الكود
@@ -176,7 +175,6 @@
                 <h3 class="text-xl font-bold mb-1 text-white">اللعبة الجديدة</h3>
                 <p class="text-sm text-gray-300 mb-4">أدخل كود التحميل السري الذي وضعته في الفيديو لفتح الرابط.</p>
                 
-                <!-- تمرير الكود الجديد ومعرف الحقل الجديد للدالة -->
                 <button onclick="simulateAd('RAMADAMOBARAK', 'game2-code')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all flex justify-center items-center gap-2 mb-5 text-sm shadow-[0_4px_10px_rgba(37,99,235,0.3)] border border-blue-500/50">
                     <i class="fa-solid fa-play-circle text-lg"></i>
                     شاهد إعلان للحصول على الكود
@@ -231,9 +229,16 @@
 
                     <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-3 px-4 rounded-lg transition-all flex justify-center items-center gap-2 mt-2 shadow-[0_4px_15px_rgba(147,51,234,0.4)]">
                         <i class="fa-solid fa-paper-plane"></i>
-                        شارك في السحب
+                        شارك في السحب وإرسال التفاصيل
                     </button>
                 </form>
+
+                <!-- رسالة النجاح المخفية (تظهر بعد الإرسال) -->
+                <div id="gw-success" class="hidden mt-4 bg-green-900/50 border border-green-500/50 rounded-lg p-4 text-sm text-white text-center shadow-[0_0_15px_rgba(34,197,94,0.3)]">
+                    <i class="fa-solid fa-clipboard-check text-green-400 text-3xl mb-2 block animate-bounce"></i>
+                    <p class="font-bold text-lg text-green-300 mb-1">تم نسخ رسالتك بنجاح!</p>
+                    <p class="text-gray-200">سيتم تحويلك الآن لحسابي في إنستغرام..<br> <b>قم بلصق الرسالة في الخاص (Direct) وأرسلها لي!</b></p>
+                </div>
 
                 <!-- توجيه المتابعين لحساب الإنستغرام الخاص بك -->
                 <div class="mt-5 pt-4 border-t border-purple-500/30 text-center">
@@ -242,12 +247,6 @@
                         <i class="fa-brands fa-instagram text-xl"></i>
                         حسابي على انستغرام (omar_games_pro_maroc)
                     </a>
-                </div>
-
-                <!-- رسالة النجاح المخفية (تظهر بعد الإرسال) -->
-                <div id="gw-success" class="hidden mt-4 bg-green-900/40 border border-green-500/50 rounded-lg p-3 text-sm text-green-200 text-center animate-pulse">
-                    <i class="fa-solid fa-check-circle text-green-400 text-lg mb-1 block"></i>
-                    تم تسجيل مشاركتك بنجاح! راقب رسائلك على الإنستغرام، سأتواصل معك هناك إذا فزت!
                 </div>
             </div>
         </div>
@@ -320,11 +319,9 @@
 
         // دوال الإعلان والكود
         function simulateAd(targetCode, targetInputId) {
-            // حفظ الكود والحقل المستهدف
             currentAdCode = targetCode;
             currentInputId = targetInputId;
 
-            // فتح رابط إعلان Adsterra في نافذة جديدة بمجرد الضغط
             window.open(adsterraLink, '_blank');
 
             const modal = document.getElementById('ad-modal');
@@ -332,17 +329,14 @@
             const finishedState = document.getElementById('ad-finished-state');
             const progressBar = document.getElementById('ad-progress');
             
-            // تحديث النصوص في النافذة المنبثقة
             document.getElementById('the-code-text').innerText = currentAdCode;
             document.getElementById('note-code-text').innerText = currentAdCode;
 
-            // إعادة ضبط الحالة
             playingState.classList.remove('hidden');
             finishedState.classList.add('hidden');
             progressBar.style.width = '0%';
             modal.classList.remove('hidden');
 
-            // محاكاة تقدم الإعلان (5 ثواني)
             let progress = 0;
             const interval = setInterval(() => {
                 progress += 20;
@@ -364,9 +358,7 @@
 
         function copyCodeAndClose() {
             try {
-                // محاولة نسخ الكود للحافظة
                 navigator.clipboard.writeText(currentAdCode).catch(err => {
-                    // Fallback القديم
                     const tempInput = document.createElement("input");
                     tempInput.value = currentAdCode;
                     document.body.appendChild(tempInput);
@@ -376,64 +368,80 @@
                 });
             } catch (err) {}
             
-            // وضع الكود تلقائياً في حقل الإدخال المناسب لتسهيل الأمر
             const inputElement = document.getElementById(currentInputId);
             if (inputElement) {
                 inputElement.value = currentAdCode;
-                
-                // تمييز الحقل باللون الأخضر لثانية ليعرف أنه تم اللصق
                 inputElement.classList.add('border-green-500');
                 setTimeout(() => {
                     inputElement.classList.remove('border-green-500');
                 }, 1500);
             }
             
-            // إغلاق النافذة
             closeAdModal();
         }
 
         function checkAndDownload(inputId, correctCode, downloadLink) {
-            // الحصول على القيمة المدخلة وتحويلها لأحرف كبيرة لتجنب أخطاء حالة الأحرف وإزالة الفراغات
             const inputElement = document.getElementById(inputId);
             const userInput = inputElement.value.trim().toUpperCase();
             const errorElement = document.getElementById(inputId + '-error');
 
             if (userInput === correctCode.toUpperCase()) {
-                // الكود صحيح: إخفاء رسالة الخطأ وتلوين الحقل بالأخضر
                 errorElement.classList.add('hidden');
                 inputElement.classList.remove('border-red-500');
                 inputElement.classList.add('border-green-500');
                 
-                // فتح رابط إعلان Adsterra في نافذة جديدة لزيادة الأرباح
                 window.open(adsterraLink, '_blank');
                 
-                // توجيه الزائر في نفس الصفحة إلى رابط التحميل (لتجنب حظر النوافذ)
                 setTimeout(() => {
                     window.location.href = downloadLink;
                 }, 200);
             } else {
-                // الكود خاطئ: إظهار رسالة الخطأ وتلوين الحقل بالأحمر
                 errorElement.classList.remove('hidden');
                 inputElement.classList.add('border-red-500');
                 inputElement.classList.remove('border-green-500');
             }
         }
 
-        // دالة المشاركة في مسابقة الحسابات
+        // دالة المشاركة في مسابقة الحسابات وتوجيه للإنستغرام
         function submitGiveaway(event) {
-            event.preventDefault(); // منع إعادة تحميل الصفحة
+            event.preventDefault(); 
             
-            // إظهار رسالة النجاح
+            // جلب المعلومات من النموذج
+            const name = document.getElementById('gw-name').value;
+            const insta = document.getElementById('gw-insta').value;
+            const msg = document.getElementById('gw-msg').value;
+
+            // تجهيز الرسالة لتكون جاهزة للصق في رسائل الإنستغرام
+            const textToCopy = `مرحباً عمر، أريد المشاركة في مسابقة حسابات جوجل بلاي! 🎁\n\n👤 الاسم: ${name}\n📱 حسابي: @${insta}\n💬 طلبي: ${msg}`;
+
+            // نسخ الرسالة إلى الحافظة
+            try {
+                navigator.clipboard.writeText(textToCopy).catch(err => {
+                    const tempInput = document.createElement("textarea");
+                    tempInput.value = textToCopy;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(tempInput);
+                });
+            } catch (err) {}
+
+            // إظهار رسالة النجاح للمستخدم بأنه تم النسخ ويجب عليه اللصق
             const successMsg = document.getElementById('gw-success');
             successMsg.classList.remove('hidden');
             
             // إفراغ الحقول
             event.target.reset();
 
-            // إخفاء رسالة النجاح بعد 5 ثواني
+            // تحويل المستخدم لصفحة الإنستغرام الخاصة بك بعد 2.5 ثانية
+            setTimeout(() => {
+                window.open('https://www.instagram.com/omar_games_pro_maroc', '_blank');
+            }, 2500);
+
+            // إخفاء رسالة النجاح بعد فترة طويلة (10 ثواني)
             setTimeout(() => {
                 successMsg.classList.add('hidden');
-            }, 5000);
+            }, 10000);
         }
     </script>
 </body>
